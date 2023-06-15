@@ -1,23 +1,21 @@
 import { Contact } from 'components/Contact/Contact';
-import PropTypes from 'prop-types';
 import { Li, Ul } from './ContactList.slyled';
+import { useSelector } from 'react-redux';
+import { getContacts, getFilter } from 'redux/contactsSlice';
+import { getVisibleContacts } from 'components/Utils/getVisibleContacts.jsx';
 
-export const ContactList = ({ contacts, onDelete }) => {
+export const ContactList = () => {
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
+  const visibleContacts = getVisibleContacts(filter, contacts);
+
   return (
     <Ul>
-      {contacts.map(contact => (
+      {visibleContacts.map(contact => (
         <Li key={contact.id}>
-          <Contact contact={contact} onDelete={onDelete} />
+          <Contact contact={contact} />
         </Li>
       ))}
     </Ul>
   );
-};
-
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }).isRequired
-  ).isRequired,
 };

@@ -1,27 +1,40 @@
-import { Formik, Field } from 'formik';
+import { Formik } from 'formik';
 import { nanoid } from 'nanoid';
-import PropTypes from 'prop-types';
 import {
   ButtonAdd,
   FormStyled,
   InputStyled,
   Label,
 } from './ContactForm.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContacts, getContacts } from 'redux/contactsSlice';
+import { isExistName } from 'components/Utils/getVisibleContacts';
 
-export const ContactForm = ({ onAdd }) => {
+export const ContactForm = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
+
+  const handleSubmit = (values, actions) => {
+   const {name, number} = values;
+
+   if (!isExistName(name, contacts)) {
+    dispatch(
+      addContacts({
+        name, number,
+        id: nanoid(),
+      })
+    );
+   }
+    actions.resetForm();
+  }
+
   return (
     <Formik
       initialValues={{
         name: '',
         number: '',
       }}
-      onSubmit={(values, actions) => {
-        onAdd({
-          ...values,
-          id: nanoid(),
-        });
-        actions.resetForm();
-      }}
+      onSubmit={handleSubmit}
     >
       <FormStyled>
         <Label>
@@ -52,13 +65,3 @@ export const ContactForm = ({ onAdd }) => {
   );
 };
 
-ContactForm.propTypes = {
-  onAdd: PropTypes.func.isRequired,
-};
-
-Field.propTypes = {
-  type: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  pattern: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-};
