@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import contactsData from '../components/Data/Contacts.json';
+import contactsData from '../Data/Contacts.json';
 import { nanoid } from 'nanoid';
 import storage from 'redux-persist/lib/storage';
 import persistReducer from 'redux-persist/es/persistReducer';

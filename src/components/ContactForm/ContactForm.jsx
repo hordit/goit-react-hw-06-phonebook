@@ -7,8 +7,8 @@ import {
   Label,
 } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContacts, getContacts } from 'redux/contactsSlice';
-import { isExistName } from 'components/Utils/getVisibleContacts';
+import { addContacts as addContact, getContacts } from 'redux/contactsSlice';
+import { isExistName } from 'Utils/getVisibleContacts';
 
 export const ContactForm = () => {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ export const ContactForm = () => {
 
    if (!isExistName(name, contacts)) {
     dispatch(
-      addContacts({
+      addContact({
         name, number,
         id: nanoid(),
       })

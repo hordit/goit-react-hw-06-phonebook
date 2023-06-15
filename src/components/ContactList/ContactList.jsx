@@ -2,7 +2,7 @@ import { Contact } from 'components/Contact/Contact';
 import { Li, Ul } from './ContactList.slyled';
 import { useSelector } from 'react-redux';
 import { getContacts, getFilter } from 'redux/contactsSlice';
-import { getVisibleContacts } from 'components/Utils/getVisibleContacts.jsx';
+import { getVisibleContacts } from 'Utils/getVisibleContacts.jsx';
 
 export const ContactList = () => {
   const contacts = useSelector(getContacts);
